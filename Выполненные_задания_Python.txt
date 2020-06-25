@@ -1,0 +1,115 @@
+///Python продолжение/// 
+
+//Задание 4.6: (говнокод)
+string1="ospf_route = 'O        10.0.24.0/24 [110/41] via 10.0.13.3, 3d18h, FastEthernet0/0'"
+x= string1.split()
+OSPF = {
+        'Protocol': string1[0:4].upper(), 
+        'Prefix':x[3], 
+        'AD/Metric':x[4], 
+        'Next-Hop':x[6], 
+        'Last update':x[7], 
+        'Outbound Interface': x[8]
+        }
+
+OSPf_template = '''
+Protokol:               {}
+Prefix:                 {}
+AD/Metric:              {} 
+Next-Hop:               {}
+Last update:            {} 
+Outbound Interface:     {}
+'''
+print(OSPf_template.format(OSPF['Protocol'],OSPF['Prefix'],OSPF['AD/Metric'],OSPF['Next-Hop'],OSPF['Last update'],OSPF['Outbound Interface']))
+
+//Задание 6.1:
+mikrotik_mac = ['aabb:cc80:7000', 'aabb:dd80:7340', 'aabb:ee80:7000', 'aabb:ff80:7000']
+cisco_mac = []
+for mac in mikrotik_mac:
+    cisco_mac.append(mac.replace(':','.'))
+    
+print(mikrotik_mac)
+print(cisco_mac)
+
+Вывод:
+['aabb:cc80:7000', 'aabb:dd80:7340', 'aabb:ee80:7000', 'aabb:ff80:7000']
+['aabb.cc80.7000', 'aabb.dd80.7340', 'aabb.ee80.7000', 'aabb.ff80.7000']
+
+///Задание 6.2:
+ip_addr = input('Введите IP адрес: ')
+ip_addr = ip_addr.split('.')
+oct_1=int(ip_addr[0])
+oct_2=int(ip_addr[1])
+oct_3=int(ip_addr[2])
+oct_4=int(ip_addr[3])
+
+if oct_1>1 and oct_1<223:
+    print ('unicast')
+elif oct_1>224 and oct_1<239:
+    print ('multicast')
+elif oct_1==255 and oct_2==255 and oct_3==255 and oct_4==255:
+    print ('local broadcast')
+elif oct_1==0 and oct_2==0 and oct_3==0 and oct_4==0:
+    print ('unassigned')
+else:
+    print('unused')
+
+//Задание 7.1:
+string1=open('OSPF.txt')
+z= string1.read()
+x= z.split()
+
+OSPF = {
+        'Protocol': z[0:4].upper(), 
+        'Prefix':x[3], 
+        'AD/Metric':x[4], 
+        'Next-Hop':x[6], 
+        'Last update':x[7], 
+        'Outbound Interface': x[8]
+        }
+
+OSPf_template = '''
+Protokol:               {}
+Prefix:                 {}
+AD/Metric:              {} 
+Next-Hop:               {}
+Last update:            {} 
+Outbound Interface:     {}
+'''
+print(OSPf_template.format(OSPF['Protocol'],OSPF['Prefix'],OSPF['AD/Metric'],OSPF['Next-Hop'],OSPF['Last update'],OSPF['Outbound Interface']))
+
+//Задание 7.2
+x=input('Введите имя файла:')
+with open(x,'r') as f:
+        for line in f :
+                if line.startswith('!'):
+                     pass   
+                else:
+                        print(line.rstrip())
+
+//Задание 7.2a:
+
+//Задание 7.3:
+f=open('config.txt')
+for strings in f:
+        x=str.split(f.readline())
+        if len(x)>3:
+                if len(x[1])>12:
+                        vlan,mac,state,intf = x
+                        print("{:<5} {:>15} {:>10}".format(vlan, mac, intf))
+
+Вывод:
+200    0a4b.c380.7c00      Gi0/2
+10     0a1b.1c80.7000      Gi0/4
+200    1a4b.c580.7000      Gi0/6
+10     01ab.c5d0.70d0      Gi0/8
+
+//Задание 7.3b:
+y=input('Введите номер vlan: ')
+f=open('config.txt')
+for strings in f:
+        x=str.split(f.readline())
+        if len(x)>3 and len(x[1])>12 and x[0] == y:
+                        vlan,mac,state,intf = x
+                        print("{:<5} {:>15} {:>10}".format(vlan, mac, intf))
+
